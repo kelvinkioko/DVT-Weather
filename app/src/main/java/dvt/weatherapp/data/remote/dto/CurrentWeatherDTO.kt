@@ -10,7 +10,7 @@ data class CurrentWeatherDTO(
     @field:Json(name = "visibility") val visibility: Int,
     @field:Json(name = "wind") val wind: WindDto,
     @field:Json(name = "clouds") val clouds: CloudsDto,
-    @field:Json(name = "dt") val dt: Long, // Sample Value 1560350645
+    @field:Json(name = "dt") val currentDate: Long,
     @field:Json(name = "sys") val SysDto: SysDto,
     @field:Json(name = "timezone") val timezone: Long,
     @field:Json(name = "id") val id: Long,
