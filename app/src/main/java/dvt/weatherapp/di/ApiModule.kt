@@ -7,6 +7,7 @@ import dagger.hilt.components.SingletonComponent
 import dvt.weatherapp.BuildConfig
 import dvt.weatherapp.data.remote.WeatherApi
 import dvt.weatherapp.util.BASE_URL
+import dvt.weatherapp.util.TIMEOUT
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -34,8 +35,8 @@ object ApiModule {
     @Singleton
     fun providesOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
         return OkHttpClient.Builder().apply {
-            readTimeout(60, TimeUnit.SECONDS)
-            connectTimeout(60, TimeUnit.SECONDS)
+            readTimeout(TIMEOUT, TimeUnit.SECONDS)
+            connectTimeout(TIMEOUT, TimeUnit.SECONDS)
             addInterceptor(httpLoggingInterceptor)
         }.build()
     }
