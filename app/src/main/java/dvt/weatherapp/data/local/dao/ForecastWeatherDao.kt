@@ -13,6 +13,18 @@ interface ForecastWeatherDao {
         forecastWeatherEntity: List<ForecastWeatherEntity>
     )
 
+    @Query(
+        """
+            SELECT *
+            FROM forecast
+            WHERE latitude =:latitude AND longitude =:longitude
+        """
+    )
+    suspend fun loadWeatherForecastByCoordinates(
+        latitude: Double,
+        longitude: Double
+    ): List<ForecastWeatherEntity>
+
     @Query("DELETE FROM forecast")
     suspend fun clearForecastWeather()
 }

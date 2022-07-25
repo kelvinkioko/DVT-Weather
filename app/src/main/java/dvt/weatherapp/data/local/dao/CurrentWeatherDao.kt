@@ -13,6 +13,15 @@ interface CurrentWeatherDao {
         currentWeatherEntity: CurrentWeatherEntity
     )
 
+    @Query(
+        """
+            SELECT *
+            FROM current
+            WHERE currentDate =:currentDate
+        """
+    )
+    suspend fun loadCurrentWeatherByDate(currentDate: String): CurrentWeatherEntity
+
     @Query("DELETE FROM current")
     suspend fun clearCurrentWeather()
 }
