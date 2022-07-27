@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">DVT Weather</string>
+    <string name="current_weather_background">Current weather background</string>
+    <string name="forecast_weather_icon">Forecast weather icon</string>
 </resources>
