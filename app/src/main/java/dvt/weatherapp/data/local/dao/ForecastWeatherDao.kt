@@ -13,11 +13,15 @@ interface ForecastWeatherDao {
         forecastWeatherEntity: List<ForecastWeatherEntity>
     )
 
+    @Query("SELECT * FROM forecast")
+    suspend fun getWeatherForecast(): List<ForecastWeatherEntity>
+
     @Query(
         """
             SELECT *
             FROM forecast
-            WHERE latitude =:latitude AND longitude =:longitude
+            WHERE latitude LIKE '%' || :latitude || '%' 
+            AND longitude LIKE '%' || :longitude || '%'
         """
     )
     suspend fun loadWeatherForecastByCoordinates(

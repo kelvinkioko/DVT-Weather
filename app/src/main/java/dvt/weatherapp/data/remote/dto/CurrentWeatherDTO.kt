@@ -53,7 +53,7 @@ data class SysDto(
     @field:Json(name = "type") val type: Int,
     @field:Json(name = "id") val id: Int,
     @field:Json(name = "message") val message: Float,
-    @field:Json(name = "country") val country: Int,
+    @field:Json(name = "country") val country: String,
     @field:Json(name = "sunrise") val sunrise: Long,
     @field:Json(name = "sunset") val sunset: Long
 )
