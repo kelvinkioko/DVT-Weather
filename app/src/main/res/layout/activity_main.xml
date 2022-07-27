@@ -53,6 +53,7 @@
         android:lineSpacingMultiplier="1.3"
         android:textColor="@color/white"
         android:textSize="@dimen/sp_32"
+        android:textAllCaps="true"
         app:layout_constraintEnd_toEndOf="@+id/currentWeatherBg"
         app:layout_constraintStart_toStartOf="@+id/currentWeatherBg"
         app:layout_constraintTop_toBottomOf="@+id/temperature"
@@ -67,8 +68,7 @@
         android:lineSpacingMultiplier="1.3"
         android:textColor="@color/white"
         android:textSize="@dimen/sp_20"
-        app:layout_constraintEnd_toEndOf="@+id/minTemperatureTitle"
-        app:layout_constraintStart_toStartOf="@+id/minTemperatureTitle"
+        app:layout_constraintStart_toStartOf="@+id/guidelineStart"
         app:layout_constraintTop_toBottomOf="@+id/currentWeatherBg"
         tools:text="20°" />
 

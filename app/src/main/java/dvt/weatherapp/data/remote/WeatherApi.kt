@@ -20,6 +20,7 @@ interface WeatherApi {
     suspend fun getWeatherForecast(
         @Query("lat") latitude: Double,
         @Query("lon") longitude: Double,
-        @Query("appid") apiKey: String = API_KEY
+        @Query("appid") apiKey: String = API_KEY,
+        @Query("units") units: String = "metric"
     ): ForecastDTO
 }

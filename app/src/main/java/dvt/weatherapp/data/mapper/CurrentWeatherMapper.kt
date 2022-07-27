@@ -6,6 +6,7 @@ import dvt.weatherapp.domain.model.CurrentWeatherModel
 import dvt.weatherapp.extension.timestampFormat
 import dvt.weatherapp.util.CLEAR
 import dvt.weatherapp.util.CLEAR_ICON
+import java.util.Locale
 
 fun CurrentWeatherDTO.toCurrentWeatherEntity(): CurrentWeatherEntity {
     val weatherDto = weatherDto.firstOrNull()
@@ -28,9 +29,9 @@ fun CurrentWeatherDTO.toCurrentWeatherEntity(): CurrentWeatherEntity {
 
 fun CurrentWeatherEntity.toCurrentWeatherModel(): CurrentWeatherModel {
     return CurrentWeatherModel(
-        temperature = temperature,
-        minimum = minimum,
-        maximum = maximum,
+        temperature = String.format(Locale.getDefault(), "%.0f°", temperature),
+        minimum = String.format(Locale.getDefault(), "%.0f°", minimum),
+        maximum = String.format(Locale.getDefault(), "%.0f°", maximum),
         weather = weather
     )
 }

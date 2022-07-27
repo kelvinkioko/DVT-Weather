@@ -6,6 +6,7 @@ import dvt.weatherapp.domain.model.ForecastWeatherModel
 import dvt.weatherapp.extension.timestampFormat
 import dvt.weatherapp.util.CLEAR
 import dvt.weatherapp.util.CLEAR_ICON
+import java.util.Locale
 
 fun ForecastDTO.toForecastWeatherEntity(): List<ForecastWeatherEntity> {
     val weatherForecasts = mutableListOf<ForecastWeatherEntity>()
@@ -37,7 +38,7 @@ fun List<ForecastWeatherEntity>.toForecastWeatherModel(): List<ForecastWeatherMo
     this.map { forecast ->
         val forecastModel = ForecastWeatherModel(
             date = forecast.date,
-            temperature = forecast.temperature,
+            temperature = String.format(Locale.getDefault(), "%.0f°", forecast.temperature),
             weatherId = forecast.weatherId,
             weather = forecast.weather,
             weatherIcon = forecast.weatherIcon
