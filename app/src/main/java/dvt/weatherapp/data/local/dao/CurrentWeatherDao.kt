@@ -13,6 +13,9 @@ interface CurrentWeatherDao {
         currentWeatherEntity: CurrentWeatherEntity
     )
 
+    @Query("SELECT COUNT(currentDate) FROM current")
+    suspend fun countCurrentWeather(): Int
+
     @Query(
         """
             SELECT *
@@ -20,7 +23,9 @@ interface CurrentWeatherDao {
             WHERE currentDate =:currentDate
         """
     )
-    suspend fun loadCurrentWeatherByDate(currentDate: String): CurrentWeatherEntity
+    suspend fun loadCurrentWeatherByDate(
+        currentDate: String
+    ): CurrentWeatherEntity
 
     @Query("DELETE FROM current")
     suspend fun clearCurrentWeather()

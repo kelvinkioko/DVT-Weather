@@ -82,7 +82,7 @@
         android:textSize="@dimen/sp_16"
         app:layout_constraintStart_toStartOf="@+id/guidelineStart"
         app:layout_constraintTop_toBottomOf="@+id/minTemperature"
-        tools:text="min" />
+        android:text="min" />
 
     <TextView
         android:id="@+id/currentTemperature"
@@ -109,7 +109,7 @@
         app:layout_constraintEnd_toEndOf="@+id/guidelineCenter"
         app:layout_constraintStart_toStartOf="@+id/guidelineCenter"
         app:layout_constraintTop_toBottomOf="@+id/minTemperature"
-        tools:text="current" />
+        android:text="current" />
 
     <TextView
         android:id="@+id/maxTemperature"
@@ -134,7 +134,7 @@
         android:textSize="@dimen/sp_16"
         app:layout_constraintEnd_toEndOf="@+id/guidelineEnd"
         app:layout_constraintTop_toBottomOf="@+id/maxTemperature"
-        tools:text="max" />
+        android:text="max" />
 
     <View
         android:id="@+id/weatherDivider"
