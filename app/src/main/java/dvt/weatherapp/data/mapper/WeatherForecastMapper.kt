@@ -38,13 +38,7 @@ fun List<ForecastWeatherEntity>.toForecastWeatherModel(): List<ForecastWeatherMo
     this.map { forecast ->
         val forecastModel = ForecastWeatherModel(
             date = forecast.date,
-            longitude = forecast.latitude,
-            latitude = forecast.longitude,
             temperature = forecast.temperature,
-            minimum = forecast.minimum,
-            maximum = forecast.maximum,
-            pressure = forecast.pressure,
-            humidity = forecast.humidity,
             weatherId = forecast.weatherId,
             weather = forecast.weather,
             weatherIcon = forecast.weatherIcon
