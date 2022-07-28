@@ -41,8 +41,9 @@ class MainViewModel @Inject constructor(
                         }
 
                         val forecast = resource.data?.forecastWeather ?: emptyList()
+                        println("Forecast $forecast")
                         _uiState.value = MainUiState.WeatherForeCast(
-                            forecast = forecast
+                            forecast = resource.data?.forecastWeather ?: emptyList()
                         )
                     }
                 }

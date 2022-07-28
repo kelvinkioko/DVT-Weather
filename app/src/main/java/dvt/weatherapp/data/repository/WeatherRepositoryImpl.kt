@@ -71,10 +71,7 @@ class WeatherRepositoryImpl @Inject constructor(
                 currentDate = getCurrentDate()
             ).toCurrentWeatherModel()
 
-            val forecastWeather = forecastWeatherDao.loadWeatherForecastByCoordinates(
-                latitude = latitude,
-                longitude = longitude
-            ).toForecastWeatherModel()
+            val forecastWeather = forecastWeatherDao.getWeatherForecast().toForecastWeatherModel()
 
             println(currentWeatherDao.countCurrentWeather())
             println(forecastWeatherDao.getWeatherForecast())
