@@ -5,9 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dvt.weatherapp.domain.location.LocationTracker
 import dvt.weatherapp.domain.model.CurrentWeatherModel
 import dvt.weatherapp.domain.model.ForecastWeatherModel
 import dvt.weatherapp.domain.repository.WeatherRepository
+import dvt.weatherapp.util.DEFAULT_LATITUDE
+import dvt.weatherapp.util.DEFAULT_LONGITUDE
 import dvt.weatherapp.util.Resource
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -16,21 +19,25 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val weatherRepository: WeatherRepository
+    private val weatherRepository: WeatherRepository,
+    private val locationTracker: LocationTracker
 ) : ViewModel() {
 
     private val _uiState = MutableLiveData<MainUiState>()
     val uiState: LiveData<MainUiState> = _uiState
 
-    init {
-        loadWeather()
-    }
+    private var latitude: Double = DEFAULT_LATITUDE
+    private var longitude: Double = DEFAULT_LONGITUDE
 
-    private fun loadWeather() {
+    fun loadWeather() {
         viewModelScope.launch {
+            locationTracker.getCurrentLocation()?.let { location ->
+                latitude = location.latitude
+                longitude = location.longitude
+            }
             weatherRepository.getCurrentWeather(
-                latitude = -1.286389,
-                longitude = 36.817223
+                latitude = latitude,
+                longitude = longitude
             ).onEach { resource ->
                 when (resource) {
                     is Resource.Error -> println("Resource message ${resource.message}")
