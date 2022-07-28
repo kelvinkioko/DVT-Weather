@@ -2,9 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/sunny_color"
+    android:background="?attr/colorPrimary"
     tools:context=".presentation.MainActivity">
 
     <ImageView
@@ -13,11 +14,10 @@
         android:layout_height="@dimen/dp_330"
         android:contentDescription="@string/current_weather_background"
         android:scaleType="centerCrop"
-        android:paddingBottom="@dimen/dp_32"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/forest_sunny" />
+        app:srcCompat="@drawable/sea_cloudy" />
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
@@ -82,7 +82,7 @@
         android:textSize="@dimen/sp_16"
         app:layout_constraintStart_toStartOf="@+id/guidelineStart"
         app:layout_constraintTop_toBottomOf="@+id/minTemperature"
-        android:text="min" />
+        android:text="@string/min" />
 
     <TextView
         android:id="@+id/currentTemperature"
@@ -109,7 +109,7 @@
         app:layout_constraintEnd_toEndOf="@+id/guidelineCenter"
         app:layout_constraintStart_toStartOf="@+id/guidelineCenter"
         app:layout_constraintTop_toBottomOf="@+id/minTemperature"
-        android:text="current" />
+        android:text="@string/current" />
 
     <TextView
         android:id="@+id/maxTemperature"
@@ -134,7 +134,7 @@
         android:textSize="@dimen/sp_16"
         app:layout_constraintEnd_toEndOf="@+id/guidelineEnd"
         app:layout_constraintTop_toBottomOf="@+id/maxTemperature"
-        android:text="max" />
+        android:text="@string/max" />
 
     <View
         android:id="@+id/weatherDivider"
@@ -156,6 +156,31 @@
         app:layout_constraintTop_toBottomOf="@id/weatherDivider"
         tools:itemCount="2"
         tools:listitem="@layout/item_forecast" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/weatherGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="currentWeatherBg, toolbar, temperature, weather,
+        minTemperature, minTemperatureTitle, currentTemperature, currentTemperatureTitle,
+        maxTemperature, maxTemperatureTitle, weatherDivider, weatherForecast"
+        tools:visibility="visible"/>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loader"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:scaleType="centerInside"
+        android:visibility="gone"
+        app:lottie_colorFilter="?attr/colorOnPrimary"
+        app:lottie_rawRes="@raw/loader"
+        app:lottie_loop="true"
+        app:lottie_autoPlay="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineStart"

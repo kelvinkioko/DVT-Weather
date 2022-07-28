@@ -34,14 +34,13 @@ class MainViewModel @Inject constructor(
             ).onEach { resource ->
                 when (resource) {
                     is Resource.Error -> println("Resource message ${resource.message}")
-                    is Resource.Loading -> println("Resource loading ${resource.isLoading}")
+                    is Resource.Loading ->
+                        _uiState.value = MainUiState.Loading(isLoading = resource.isLoading)
                     is Resource.Success -> {
                         resource.data?.currentWeather?.let {
                             _uiState.value = MainUiState.CurrentWeather(currentWeather = it)
                         }
 
-                        val forecast = resource.data?.forecastWeather ?: emptyList()
-                        println("Forecast $forecast")
                         _uiState.value = MainUiState.WeatherForeCast(
                             forecast = resource.data?.forecastWeather ?: emptyList()
                         )

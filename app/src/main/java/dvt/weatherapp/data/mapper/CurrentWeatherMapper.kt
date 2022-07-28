@@ -32,6 +32,7 @@ fun CurrentWeatherEntity.toCurrentWeatherModel(): CurrentWeatherModel {
         temperature = String.format(Locale.getDefault(), "%.0f°", temperature),
         minimum = String.format(Locale.getDefault(), "%.0f°", minimum),
         maximum = String.format(Locale.getDefault(), "%.0f°", maximum),
+        weatherId = weatherId,
         weather = weather
     )
 }

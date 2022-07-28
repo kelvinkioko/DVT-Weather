@@ -10,6 +10,8 @@
     <dimen name="dp_48">48dp</dimen>
     <dimen name="dp_330">330dp</dimen>
 
+    <dimen name="dp_neg_48">-48dp</dimen>
+
     <!-- values sp-->
     <dimen name="sp_0">0sp</dimen>
     <dimen name="sp_4">4sp</dimen>
