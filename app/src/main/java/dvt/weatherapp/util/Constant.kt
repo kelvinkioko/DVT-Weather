@@ -12,3 +12,14 @@ const val DMY_HYPHEN = "dd-MM-yyyy"
 // Weather Constants
 const val CLEAR = "Clear"
 const val CLEAR_ICON = "01d"
+
+const val CLOUD_MIN = 801
+const val CLOUD_MAX = 899
+const val SNOW_MIN = 601
+const val SNOW_MAX = 699
+const val RAIN_MIN = 501
+const val RAIN_MAX = 599
+const val DRIZZLE_MIN = 301
+const val DRIZZLE_MAX = 399
+const val THUNDER_MIN = 201
+const val THUNDER_MAX = 299
