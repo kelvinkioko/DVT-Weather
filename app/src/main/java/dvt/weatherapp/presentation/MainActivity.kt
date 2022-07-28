@@ -1,8 +1,11 @@
 package dvt.weatherapp.presentation
 
+import android.Manifest
 import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -20,6 +23,7 @@ import dvt.weatherapp.util.CLOUD_MAX
 import dvt.weatherapp.util.CLOUD_MIN
 import dvt.weatherapp.util.DRIZZLE_MAX
 import dvt.weatherapp.util.DRIZZLE_MIN
+import dvt.weatherapp.util.LOTTIE_PADDING
 import dvt.weatherapp.util.RAIN_MAX
 import dvt.weatherapp.util.RAIN_MIN
 import dvt.weatherapp.util.SNOW_MAX
@@ -32,6 +36,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val viewModel: MainViewModel by viewModels()
+    private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,8 +44,20 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.loader.setPadding(resources.getDimensionPixelSize(R.dimen.dp_neg_48))
+        binding.loader.setPadding(LOTTIE_PADDING)
         setUpObservers()
+
+        permissionLauncher = registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) {
+            viewModel.loadWeather()
+        }
+        permissionLauncher.launch(
+            arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+        )
     }
 
     private fun setUpObservers() {

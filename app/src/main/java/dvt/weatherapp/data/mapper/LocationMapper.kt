@@ -5,6 +5,8 @@ import dvt.weatherapp.domain.model.LocationModel
 
 fun LocationModel.toLocationEntity(): LocationEntity {
     return LocationEntity(
+        city = city,
+        country = country,
         longitude = longitude,
         latitude = latitude
     )

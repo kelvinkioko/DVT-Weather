@@ -9,6 +9,12 @@ const val TIMESTAMP_CALC = 1000L
 const val DAY = "EEE"
 const val DMY_HYPHEN = "dd-MM-yyyy"
 
+const val DEFAULT_LATITUDE = -1.28638
+const val DEFAULT_LONGITUDE = 36.817223
+
+// Lottie
+const val LOTTIE_PADDING = -48
+
 // Weather Constants
 const val CLEAR = "Clear"
 const val CLEAR_ICON = "01d"
