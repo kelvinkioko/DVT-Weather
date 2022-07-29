@@ -2,6 +2,7 @@ package dvt.weatherapp.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -30,7 +31,15 @@ class ForecastAdapter : ListAdapter<ForecastWeatherModel, ForecastAdapter.ViewHo
         fun bind(forecast: ForecastWeatherModel) {
             binding.apply {
                 forecastDay.text = forecast.date
-                forecastTemperature.text = forecast.temperature.toString()
+                forecastTemperature.text = forecast.temperature
+                val context = forecastWeatherIcon.context
+                forecastWeatherIcon.setImageDrawable(
+                    ResourcesCompat.getDrawable(
+                        context.resources,
+                        forecast.weatherIcon.iconRes,
+                        context.theme
+                    )
+                )
             }
         }
     }

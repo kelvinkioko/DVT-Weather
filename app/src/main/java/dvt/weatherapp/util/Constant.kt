@@ -6,7 +6,7 @@ const val API_KEY = "3572b8a20df3d099f1ab9d451fe0ed92"
 const val TIMEOUT = 60L
 const val TIMESTAMP_CALC = 1000L
 
-const val DAY = "EEE"
+const val DAY = "EEEE"
 const val DMY_HYPHEN = "dd-MM-yyyy"
 
 const val DEFAULT_LATITUDE = -1.28638
