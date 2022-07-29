@@ -3,10 +3,12 @@ package dvt.weatherapp.data.mapper
 import dvt.weatherapp.data.local.entity.ForecastWeatherEntity
 import dvt.weatherapp.data.remote.dto.ForecastDTO
 import dvt.weatherapp.domain.model.ForecastWeatherModel
+import dvt.weatherapp.extension.dateFormatter
 import dvt.weatherapp.extension.getCurrentDate
 import dvt.weatherapp.extension.timestampFormat
 import dvt.weatherapp.util.CLEAR
 import dvt.weatherapp.util.CLEAR_ICON
+import dvt.weatherapp.util.WeatherIcon.Companion.getWeatherIcon
 import java.util.Locale
 
 fun ForecastDTO.toForecastWeatherEntity(): List<ForecastWeatherEntity> {
@@ -42,11 +44,11 @@ fun List<ForecastWeatherEntity>.toForecastWeatherModel(): List<ForecastWeatherMo
 
     this.map { forecast ->
         val forecastModel = ForecastWeatherModel(
-            date = forecast.date,
+            date = forecast.date.dateFormatter(),
             temperature = String.format(Locale.getDefault(), "%.0f°", forecast.temperature),
             weatherId = forecast.weatherId,
             weather = forecast.weather,
-            weatherIcon = forecast.weatherIcon
+            weatherIcon = forecast.weatherId.getWeatherIcon()
         )
 
         weatherForecasts.add(forecastModel)
