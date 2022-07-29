@@ -73,7 +73,7 @@ class WeatherRepositoryImpl @Inject constructor(
 
             val forecastWeather = forecastWeatherDao.getWeatherForecast().toForecastWeatherModel()
 
-            println(currentWeatherDao.countCurrentWeather())
+            println(currentWeatherDao.loadCurrentWeatherByDate(currentDate = getCurrentDate()))
             println(forecastWeatherDao.getWeatherForecast())
 
             emit(
@@ -88,7 +88,7 @@ class WeatherRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun clearCurrentWeather() {
-        currentWeatherDao.clearCurrentWeather()
+    override suspend fun deleteCurrentWeather() {
+        currentWeatherDao.deleteCurrentWeather()
     }
 }

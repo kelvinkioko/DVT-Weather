@@ -16,19 +16,13 @@ interface ForecastWeatherDao {
     @Query("SELECT * FROM forecast")
     suspend fun getWeatherForecast(): List<ForecastWeatherEntity>
 
-    @Query(
-        """
-            SELECT *
-            FROM forecast
-            WHERE latitude LIKE '%' || :latitude || '%' 
-            AND longitude LIKE '%' || :longitude || '%'
-        """
-    )
-    suspend fun loadWeatherForecastByCoordinates(
-        latitude: Double,
-        longitude: Double
-    ): List<ForecastWeatherEntity>
+    @Query("SELECT * FROM forecast WHERE city =:city AND country =:country")
+    suspend fun loadWeatherForecastByLocation(city: String, country: String):
+        List<ForecastWeatherEntity>
+
+    @Query("DELETE FROM forecast WHERE city =:city AND country =:country")
+    suspend fun deleteCurrentWeatherByLocation(city: String, country: String)
 
     @Query("DELETE FROM forecast")
-    suspend fun clearForecastWeather()
+    suspend fun deleteForecastWeather()
 }

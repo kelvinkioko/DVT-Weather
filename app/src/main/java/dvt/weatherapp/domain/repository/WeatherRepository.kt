@@ -9,5 +9,5 @@ interface WeatherRepository {
     suspend fun getCurrentWeather(latitude: Double, longitude: Double):
         Flow<Resource<WeatherModel>>
 
-    suspend fun clearCurrentWeather()
+    suspend fun deleteCurrentWeather()
 }

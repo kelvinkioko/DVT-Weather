@@ -3,6 +3,7 @@ package dvt.weatherapp.data.mapper
 import dvt.weatherapp.data.local.entity.ForecastWeatherEntity
 import dvt.weatherapp.data.remote.dto.ForecastDTO
 import dvt.weatherapp.domain.model.ForecastWeatherModel
+import dvt.weatherapp.extension.getCurrentDate
 import dvt.weatherapp.extension.timestampFormat
 import dvt.weatherapp.util.CLEAR
 import dvt.weatherapp.util.CLEAR_ICON
@@ -11,7 +12,9 @@ import java.util.Locale
 fun ForecastDTO.toForecastWeatherEntity(): List<ForecastWeatherEntity> {
     val weatherForecasts = mutableListOf<ForecastWeatherEntity>()
 
-    forecasts.map { forecast ->
+    forecasts.filter { filterItem ->
+        filterItem.forecastDate.timestampFormat() != getCurrentDate()
+    }.map { forecast ->
         val weatherDto = forecast.weatherDto.firstOrNull()
         val forecastEntity = ForecastWeatherEntity(
             date = forecast.forecastDate.timestampFormat(),
@@ -24,7 +27,9 @@ fun ForecastDTO.toForecastWeatherEntity(): List<ForecastWeatherEntity> {
             humidity = forecast.currentTemperature.humidity,
             weatherId = weatherDto?.id ?: 0,
             weather = weatherDto?.main ?: CLEAR,
-            weatherIcon = weatherDto?.icon ?: CLEAR_ICON
+            weatherIcon = weatherDto?.icon ?: CLEAR_ICON,
+            city = cityDto.name,
+            country = cityDto.country
         )
         weatherForecasts.add(forecastEntity)
     }
