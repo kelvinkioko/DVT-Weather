@@ -1,6 +1,7 @@
 package dvt.weatherapp.data.local.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -13,9 +14,12 @@ interface LocationDao {
         locationEntity: LocationEntity
     )
 
+    @Query("SELECT * FROM location")
+    suspend fun loadLocations(): List<LocationEntity>
+
     @Query(
         """
-            SELECT COUNT(id)
+            SELECT COUNT(city)
             FROM location
             WHERE latitude =:latitude AND longitude =:longitude
         """
@@ -25,6 +29,9 @@ interface LocationDao {
         longitude: Double
     ): Int
 
+    @Delete
+    suspend fun deleteSpecificLocations(locationEntity: LocationEntity)
+
     @Query("DELETE FROM location")
-    suspend fun clearLocation()
+    suspend fun deleteAllLocations()
 }

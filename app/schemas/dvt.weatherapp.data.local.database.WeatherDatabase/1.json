@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "a0900d8a484ac4478adb34c2f7fa0835",
+    "identityHash": "cd68019579bb53f16f62fc73c64ef480",
     "entities": [
       {
         "tableName": "current",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`currentDate` TEXT NOT NULL, `longitude` REAL NOT NULL, `latitude` REAL NOT NULL, `temperature` REAL NOT NULL, `minimum` REAL NOT NULL, `maximum` REAL NOT NULL, `pressure` REAL NOT NULL, `humidity` REAL NOT NULL, `sunrise` TEXT NOT NULL, `sunset` TEXT NOT NULL, `weatherId` INTEGER NOT NULL, `weather` TEXT NOT NULL, `weatherIcon` TEXT NOT NULL, PRIMARY KEY(`currentDate`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`currentDate` TEXT NOT NULL, `longitude` REAL NOT NULL, `latitude` REAL NOT NULL, `temperature` REAL NOT NULL, `minimum` REAL NOT NULL, `maximum` REAL NOT NULL, `pressure` REAL NOT NULL, `humidity` REAL NOT NULL, `sunrise` TEXT NOT NULL, `sunset` TEXT NOT NULL, `weatherId` INTEGER NOT NULL, `weather` TEXT NOT NULL, `weatherIcon` TEXT NOT NULL, `city` TEXT NOT NULL, `country` TEXT NOT NULL, PRIMARY KEY(`currentDate`, `city`, `country`))",
         "fields": [
           {
             "fieldPath": "currentDate",
@@ -85,11 +85,25 @@
             "columnName": "weatherIcon",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "city",
+            "columnName": "city",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "country",
+            "columnName": "country",
+            "affinity": "TEXT",
+            "notNull": true
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "currentDate"
+            "currentDate",
+            "city",
+            "country"
           ],
           "autoGenerate": false
         },
@@ -98,7 +112,7 @@
       },
       {
         "tableName": "forecast",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`date` TEXT NOT NULL, `longitude` REAL NOT NULL, `latitude` REAL NOT NULL, `temperature` REAL NOT NULL, `minimum` REAL NOT NULL, `maximum` REAL NOT NULL, `pressure` REAL NOT NULL, `humidity` REAL NOT NULL, `weatherId` INTEGER NOT NULL, `weather` TEXT NOT NULL, `weatherIcon` TEXT NOT NULL, PRIMARY KEY(`date`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`date` TEXT NOT NULL, `longitude` REAL NOT NULL, `latitude` REAL NOT NULL, `temperature` REAL NOT NULL, `minimum` REAL NOT NULL, `maximum` REAL NOT NULL, `pressure` REAL NOT NULL, `humidity` REAL NOT NULL, `weatherId` INTEGER NOT NULL, `weather` TEXT NOT NULL, `weatherIcon` TEXT NOT NULL, `city` TEXT NOT NULL, `country` TEXT NOT NULL, PRIMARY KEY(`date`, `city`, `country`))",
         "fields": [
           {
             "fieldPath": "date",
@@ -165,11 +179,25 @@
             "columnName": "weatherIcon",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "city",
+            "columnName": "city",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "country",
+            "columnName": "country",
+            "affinity": "TEXT",
+            "notNull": true
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "date"
+            "date",
+            "city",
+            "country"
           ],
           "autoGenerate": false
         },
@@ -178,14 +206,8 @@
       },
       {
         "tableName": "location",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `city` TEXT NOT NULL, `country` TEXT NOT NULL, `latitude` REAL NOT NULL, `longitude` REAL NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`city` TEXT NOT NULL, `country` TEXT NOT NULL, `latitude` REAL NOT NULL, `longitude` REAL NOT NULL, PRIMARY KEY(`city`, `country`, `latitude`, `longitude`))",
         "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
           {
             "fieldPath": "city",
             "columnName": "city",
@@ -213,7 +235,10 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "id"
+            "city",
+            "country",
+            "latitude",
+            "longitude"
           ],
           "autoGenerate": false
         },
@@ -224,7 +249,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a0900d8a484ac4478adb34c2f7fa0835')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'cd68019579bb53f16f62fc73c64ef480')"
     ]
   }
 }

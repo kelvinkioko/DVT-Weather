@@ -23,7 +23,9 @@ fun CurrentWeatherDTO.toCurrentWeatherEntity(): CurrentWeatherEntity {
         sunset = sysDto.sunset.timestampFormat(),
         weatherId = weatherDto?.id ?: 0,
         weather = weatherDto?.main ?: CLEAR,
-        weatherIcon = weatherDto?.icon ?: CLEAR_ICON
+        weatherIcon = weatherDto?.icon ?: CLEAR_ICON,
+        city = name,
+        country = sysDto.country
     )
 }
 

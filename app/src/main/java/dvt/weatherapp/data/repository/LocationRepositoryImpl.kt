@@ -37,6 +37,6 @@ class LocationRepositoryImpl @Inject constructor(
     }
 
     override suspend fun clearLocation() {
-        locationDao.clearLocation()
+        locationDao.deleteAllLocations()
     }
 }

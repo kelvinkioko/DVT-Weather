@@ -1,11 +1,10 @@
 package dvt.weatherapp.data.local.entity
 
 import androidx.room.Entity
-import androidx.room.PrimaryKey
 
-@Entity(tableName = "forecast")
+@Entity(tableName = "forecast", primaryKeys = ["date", "city", "country"])
 data class ForecastWeatherEntity(
-    @PrimaryKey val date: String,
+    val date: String,
     val longitude: Double,
     val latitude: Double,
     val temperature: Double,
@@ -15,5 +14,7 @@ data class ForecastWeatherEntity(
     val humidity: Double,
     val weatherId: Int,
     val weather: String,
-    val weatherIcon: String
+    val weatherIcon: String,
+    val city: String,
+    val country: String
 )

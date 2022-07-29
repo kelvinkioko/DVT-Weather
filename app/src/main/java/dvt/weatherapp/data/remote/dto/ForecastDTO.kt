@@ -5,7 +5,7 @@ import com.squareup.moshi.Json
 data class ForecastDTO(
     @field:Json(name = "cnt") val cnt: Int,
     @field:Json(name = "list") val forecasts: List<ListDto>,
-    @field:Json(name = "city") val cityDto: CityDto,
+    @field:Json(name = "city") val cityDto: CityDto
 )
 
 data class ListDto(
