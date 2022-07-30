@@ -3,12 +3,14 @@ package dvt.weatherapp.data.repository
 import com.squareup.moshi.JsonDataException
 import dvt.weatherapp.data.local.dao.CurrentWeatherDao
 import dvt.weatherapp.data.local.dao.ForecastWeatherDao
+import dvt.weatherapp.data.local.dao.LocationDao
 import dvt.weatherapp.data.local.database.WeatherDatabase
 import dvt.weatherapp.data.mapper.toCurrentWeatherEntity
 import dvt.weatherapp.data.mapper.toCurrentWeatherModel
 import dvt.weatherapp.data.mapper.toForecastWeatherEntity
 import dvt.weatherapp.data.mapper.toForecastWeatherModel
 import dvt.weatherapp.data.remote.WeatherApi
+import dvt.weatherapp.domain.model.LocationModel
 import dvt.weatherapp.domain.model.WeatherModel
 import dvt.weatherapp.domain.repository.WeatherRepository
 import dvt.weatherapp.extension.getCurrentDate
@@ -29,6 +31,7 @@ class WeatherRepositoryImpl @Inject constructor(
 
     private val currentWeatherDao: CurrentWeatherDao = weatherDatabase.currentWeatherDao
     private val forecastWeatherDao: ForecastWeatherDao = weatherDatabase.forecastWeatherDao
+    private val locationDao: LocationDao = weatherDatabase.locationDao
 
     override suspend fun getCurrentWeather(
         latitude: Double,
@@ -57,9 +60,24 @@ class WeatherRepositoryImpl @Inject constructor(
                 null
             }
 
+            var locationModel: LocationModel? = null
+
             remoteCurrentWeather?.let { currentWeather ->
                 val currentWeatherEntity = currentWeather.await().toCurrentWeatherEntity()
                 currentWeatherDao.insertCurrentWeather(currentWeatherEntity = currentWeatherEntity)
+
+                if (
+                    locationDao.doesLocationExists(
+                        city = currentWeatherEntity.city,
+                        country = currentWeatherEntity.country
+                    ) == 0
+                )
+                    locationModel = LocationModel(
+                        city = currentWeatherEntity.city,
+                        country = currentWeatherEntity.country,
+                        latitude = latitude,
+                        longitude = longitude
+                    )
             }
 
             remoteWeatherForecast?.let { forecastDTO ->
@@ -73,14 +91,12 @@ class WeatherRepositoryImpl @Inject constructor(
 
             val forecastWeather = forecastWeatherDao.getWeatherForecast().toForecastWeatherModel()
 
-            println(currentWeatherDao.loadCurrentWeatherByDate(currentDate = getCurrentDate()))
-            println(forecastWeatherDao.getWeatherForecast())
-
             emit(
                 Resource.Success(
                     data = WeatherModel(
                         currentWeather = currentWeather,
-                        forecastWeather = forecastWeather
+                        forecastWeather = forecastWeather,
+                        location = locationModel
                     )
                 )
             )

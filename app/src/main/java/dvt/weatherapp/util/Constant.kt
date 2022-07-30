@@ -29,3 +29,5 @@ const val DRIZZLE_MIN = 301
 const val DRIZZLE_MAX = 399
 const val THUNDER_MIN = 201
 const val THUNDER_MAX = 299
+
+const val SHEET_HEIGHT = 0.90

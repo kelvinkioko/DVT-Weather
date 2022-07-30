@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>MatchingDeclarationName:ViewBindingExtension.kt$FragmentViewBindingDelegate&lt;T : ViewBinding> : ReadOnlyProperty</ID>
+    <ID>UseCheckOrError:ViewBindingExtension.kt$FragmentViewBindingDelegate$throw IllegalStateException("Should not attempt to get bindings when Fragment views are destroyed.")</ID>
+  </CurrentIssues>
+</SmellBaseline>

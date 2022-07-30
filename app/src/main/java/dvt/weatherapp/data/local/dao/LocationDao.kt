@@ -17,17 +17,8 @@ interface LocationDao {
     @Query("SELECT * FROM location")
     suspend fun loadLocations(): List<LocationEntity>
 
-    @Query(
-        """
-            SELECT COUNT(city)
-            FROM location
-            WHERE latitude =:latitude AND longitude =:longitude
-        """
-    )
-    suspend fun doesLocationExists(
-        latitude: Double,
-        longitude: Double
-    ): Int
+    @Query("SELECT COUNT(city) FROM location WHERE city =:city AND country =:country")
+    suspend fun doesLocationExists(city: String, country: String): Int
 
     @Delete
     suspend fun deleteSpecificLocations(locationEntity: LocationEntity)
