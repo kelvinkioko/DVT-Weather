@@ -5,4 +5,5 @@
     <string name="min">min</string>
     <string name="current">current</string>
     <string name="max">max</string>
+    <string name="save_location">Would you like to save %s as a favourite? \n\nFavorites can be accessed later from the top menu</string>
 </resources>

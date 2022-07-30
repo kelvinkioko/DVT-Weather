@@ -1,9 +1,15 @@
 package dvt.weatherapp.presentation
 
 import android.Manifest
+import android.app.Dialog
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.Window
 import android.view.WindowManager
+import android.widget.Button
+import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -12,6 +18,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.core.view.setPadding
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import dvt.weatherapp.R
 import dvt.weatherapp.databinding.ActivityMainBinding
@@ -37,6 +44,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val viewModel: MainViewModel by viewModels()
     private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
+    private var dialog: Dialog? = null
+    private var bottomSheet: BottomSheetDialogFragment? = null
+    private var showSaveButton: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +55,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.loader.setPadding(LOTTIE_PADDING)
+        setUpToolbar()
         setUpObservers()
 
         permissionLauncher = registerForActivityResult(
@@ -60,14 +71,51 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
+    private fun setUpToolbar() {
+        binding.toolbar.setOnMenuItemClickListener { onOptionsItemSelected(it) }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.addLocation -> {
+                viewModel.saveLocationPrompt()
+                true
+            }
+            R.id.viewLocations -> {
+                viewModel.showLocations()
+                true
+            }
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
+        }
+    }
+
     private fun setUpObservers() {
         viewModel.uiState.observe(this) { state ->
             when (state) {
-                is MainUiState.CurrentWeather ->
-                    renderCurrentWeather(currentWeather = state.currentWeather)
                 is MainUiState.Loading ->
                     renderLoadingState(isLoading = state.isLoading)
+                is MainUiState.LocationModel -> {
+                    showSaveButton = state.showSaveButton
+                    invalidateOptionsMenu()
+                }
+                is MainUiState.CurrentWeather ->
+                    renderCurrentWeather(currentWeather = state.currentWeather)
                 is MainUiState.WeatherForeCast -> renderForecast(forecast = state.forecast)
+                is MainUiState.SaveLocationPrompt ->
+                    state.locationDetails?.let { locationDetails ->
+                        displayLocationSaveDialog(locationDetails = locationDetails)
+                    }
+            }
+        }
+
+        viewModel.action.observe(this) { action ->
+            when (action) {
+                is MainActions.ShowLocations -> {
+                    bottomSheet = action.bottomSheet
+                    bottomSheet?.show(supportFragmentManager, bottomSheet?.tag)
+                }
             }
         }
     }
@@ -88,6 +136,8 @@ class MainActivity : AppCompatActivity() {
             maxTemperature.text = currentWeather.maximum
 
             renderStyleBasedOnWeather(weatherId = currentWeather.weatherId)
+
+            invalidateOptionsMenu()
         }
     }
 
@@ -126,5 +176,53 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun displayLocationSaveDialog(locationDetails: String) {
+        dialog?.dismiss()
+        dialog = Dialog(this)
+        dialog?.let {
+            it.setCanceledOnTouchOutside(false)
+            it.setCancelable(false)
+            it.setContentView(R.layout.dialog_notification)
+
+            it.window?.apply {
+                setBackgroundDrawableResource(android.R.color.transparent)
+                setLayout(
+                    WindowManager.LayoutParams.MATCH_PARENT,
+                    WindowManager.LayoutParams.WRAP_CONTENT
+                )
+            }
+            it.show()
+
+            val supportingTextTV: TextView = it.findViewById(R.id.supportingText)
+            val dismissAction: Button = it.findViewById(R.id.dismissAction)
+            val decisionAction: Button = it.findViewById(R.id.decisionAction)
+
+            supportingTextTV.text = String.format(
+                getString(R.string.save_location),
+                locationDetails
+            )
+
+            dismissAction.setOnClickListener { _ ->
+                it.dismiss()
+            }
+
+            decisionAction.setOnClickListener { _ ->
+                viewModel.saveLocation()
+                it.dismiss()
+            }
+        }
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+        super.onPrepareOptionsMenu(menu)
+        val inflater: MenuInflater = this.menuInflater
+        inflater.inflate(R.menu.locations_menu, menu)
+
+        println("Resource onPrepareOptionsMenu ${menu.getItem(R.id.addLocation).isVisible}")
+
+        menu.getItem(R.id.addLocation).isVisible = false
+        return super.onPrepareOptionsMenu(menu)
     }
 }

@@ -11,3 +11,19 @@ fun LocationModel.toLocationEntity(): LocationEntity {
         latitude = latitude
     )
 }
+
+fun List<LocationEntity>.toLocationsModel(): List<LocationModel> {
+    val locationsModel = mutableListOf<LocationModel>()
+
+    this.map { location ->
+        val locationModel = LocationModel(
+            city = location.city,
+            country = location.country,
+            longitude = location.longitude,
+            latitude = location.latitude
+        )
+
+        locationsModel.add(locationModel)
+    }
+    return locationsModel
+}

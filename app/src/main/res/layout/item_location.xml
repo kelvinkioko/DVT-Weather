@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:background="?attr/colorPrimary"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <TextView
+        android:id="@+id/locationName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/dp_16"
+        android:layout_marginHorizontal="@dimen/dp_24"
+        android:letterSpacing="0.1"
+        android:lineSpacingMultiplier="1.3"
+        android:textSize="@dimen/sp_18"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Thika, Ke" />
+
+    <TextView
+        android:id="@+id/locationCoordinates"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dp_24"
+        android:layout_marginBottom="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_4"
+        android:letterSpacing="0.1"
+        android:lineSpacingMultiplier="1.3"
+        android:textSize="@dimen/sp_18"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/locationDivider"
+        app:layout_constraintTop_toBottomOf="@+id/locationName"
+        tools:text="lat:-1.1017, lon:37.0114" />
+
+    <View
+        android:id="@+id/locationDivider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/dp_8"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

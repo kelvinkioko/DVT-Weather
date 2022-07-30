@@ -9,5 +9,7 @@ interface LocationRepository {
         locationModel: LocationModel
     ): Flow<Resource<Boolean>>
 
+    suspend fun loadLocations(): List<LocationModel>
+
     suspend fun clearLocation()
 }
